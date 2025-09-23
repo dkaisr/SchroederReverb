@@ -29,8 +29,9 @@
               lcov
               vcpkg
               vcpkg-tool
-
-	      juce
+	      pkg-config
+	      alsa-lib
+	      gtk3-x11
             ] ++ (if system == "aarch64-darwin" then [ ] else [ gdb ]);
           };
       });
