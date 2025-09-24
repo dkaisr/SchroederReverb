@@ -16,7 +16,10 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
-    SchroederReverbAudioProcessor& processorRef;
+    SchroederReverbAudioProcessor &processorRef;
+
+    juce::Slider gainSlider;
+    juce::AudioParameterFloat* gainParam = nullptr;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SchroederReverbAudioProcessorEditor)
 };

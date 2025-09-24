@@ -8,7 +8,7 @@ SchroederReverbAudioProcessor::SchroederReverbAudioProcessor()
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      )
 {
-  addParameter(gain = new juce::AudioParameterFloat({ "gain", 1 }, "Gain", 0.0f, 1.0f, 0.5f));
+  addParameter(gain = new juce::AudioParameterFloat({ "gain", 1 }, "Gain", 0.0f, 5.0f, 1.0f));
 }
 
 SchroederReverbAudioProcessor::~SchroederReverbAudioProcessor()
@@ -121,7 +121,6 @@ bool SchroederReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& l
 void SchroederReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
                                               juce::MidiBuffer& midiMessages)
 {
-    DBG("processBlock hit");
     juce::ignoreUnused (midiMessages);
 
     juce::ScopedNoDenormals noDenormals;

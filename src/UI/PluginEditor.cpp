@@ -5,9 +5,21 @@
 SchroederReverbAudioProcessorEditor::SchroederReverbAudioProcessorEditor (SchroederReverbAudioProcessor& p)
     : AudioProcessorEditor (&p), processorRef (p)
 {
-    juce::ignoreUnused (processorRef);
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
+    gainParam = processorRef.gain;
+
+    gainSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    gainSlider.setTextBoxStyle(juce::Slider::TextBoxRight, false, 50, 20);
+    gainSlider.setRange(0.0, 5.0, 0.01);
+
+    addAndMakeVisible(gainSlider);
+    gainSlider.setValue(gainParam->get());
+
+    gainSlider.onValueChange = [this]() {
+      if (gainParam != nullptr) {
+	*gainParam = (float)gainSlider.getValue();
+        }
+    };
+    
     setSize (400, 300);
 }
 
@@ -17,17 +29,11 @@ SchroederReverbAudioProcessorEditor::~SchroederReverbAudioProcessorEditor()
 
 //==============================================================================
 void SchroederReverbAudioProcessorEditor::paint (juce::Graphics& g)
-{
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
-}
+{}
 
 void SchroederReverbAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+  // This is generally where you'll want to lay out the positions of any
+  // subcomponents in your editor..
+  gainSlider.setBounds(40, 80, getWidth() - 80, 20);
 }
