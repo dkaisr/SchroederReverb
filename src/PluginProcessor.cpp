@@ -88,7 +88,7 @@ void SchroederReverbAudioProcessor::prepareToPlay (double sampleRate, int sample
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    combFilter.prepare(sampleRate, samplesPerBlock);
+    schroederReverb.prepare(sampleRate, samplesPerBlock);
 }
 
 void SchroederReverbAudioProcessor::releaseResources()
@@ -149,7 +149,7 @@ void SchroederReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buff
     {
       auto *channelData = buffer.getWritePointer(channel);
       for (int i = 0; i < buffer.getNumSamples(); ++i) {
-	        combFilter.process(&channelData[i]);
+	        schroederReverb.process(&channelData[i]);
         }
         // ..do something to the data...
     }
