@@ -5,7 +5,7 @@ void CombFilter::prepare(double sampleRate, int samplesPerBlock, int delayInSamp
   int maxDelaySamples = static_cast<int>(sampleRate * maxDelayTimeMs / 1000.0);
 
   delayBuffer.resize(maxDelaySamples, 0.0f);
-  //delayInSamples = static_cast<int>(sampleRate * delayInSeconds);
+  std::fill(delayBuffer.begin(), delayBuffer.end(), 0.0f);
   delayBufferWritePos = 0;
   this->delayInSamples_ = delayInSamples;
   this->gain = gain;
