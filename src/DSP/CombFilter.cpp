@@ -1,7 +1,7 @@
 #include "CombFilter.h"
 
 void CombFilter::prepare(double sampleRate, int samplesPerBlock, int delayInSamples, float gain) {
-  int maxDelayTimeMs = 100;
+  int maxDelayTimeMs = 500;
   int maxDelaySamples = static_cast<int>(sampleRate * maxDelayTimeMs / 1000.0);
 
   delayBuffer.resize(maxDelaySamples, 0.0f);
@@ -17,6 +17,6 @@ void CombFilter::process(float* sample) {
   float delayedSample = delayBuffer[delayReadPos];
   float yn = *sample + gain * delayedSample;
   delayBuffer[delayBufferWritePos] = yn;
-  *sample = yn;
   delayBufferWritePos = (delayBufferWritePos + 1) % delayBufferLength;
+  *sample = delayedSample;  
 }
