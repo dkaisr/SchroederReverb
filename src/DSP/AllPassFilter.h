@@ -2,15 +2,16 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
-class AllPassFilter {
-public:
-  void prepare(double sampleRate, int samplesPerBlock, int delayInSamples, float gain);
-  void reset();
-  void process(float *sample);
+class AllPassFilter
+{
+  public:
+    void prepare(double sampleRate, int samplesPerBlock, int delayInSamples, float gain);
+    void reset();
+    void process(float* sample);
 
-private:
-  std::vector<float> delayBuffer;
-  int delayBufferWritePos = 0;
-  int delayInSamples_ = 0;
-  float gain = 0.7f;
+  private:
+    std::vector<float> delayBuffer;
+    int delayBufferWritePos = 0;
+    int delayInSamples_ = 0;
+    float gain = 0.7f;
 };

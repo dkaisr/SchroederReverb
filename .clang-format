@@ -1,0 +1,9 @@
+BasedOnStyle: GNU
+
+ColumnLimit: 100
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+PointerAlignment: Left
+BreakBeforeBraces: Allman
+SpaceBeforeParens: ControlStatements

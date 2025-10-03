@@ -1,30 +1,32 @@
 #include "AllPassFilter.h"
 
-void AllPassFilter::prepare(double sampleRate, int samplesPerBlock, int delayInSamples, float gain) {
-  int maxDelayTimeMs = 100;
-  int maxDelaySamples = static_cast<int>(sampleRate * maxDelayTimeMs / 1000.0);
+void
+AllPassFilter::prepare(double sampleRate, int samplesPerBlock, int delayInSamples, float gain)
+{
+    int maxDelayTimeMs = 100;
+    int maxDelaySamples = static_cast<int>(sampleRate * maxDelayTimeMs / 1000.0);
 
-  delayBuffer.resize(maxDelaySamples, 0.0f);
-  std::fill(delayBuffer.begin(), delayBuffer.end(), 0.0f);  
-  delayBufferWritePos = 0;
-  this->delayInSamples_ = delayInSamples;
-  this->gain = gain;
+    delayBuffer.resize(maxDelaySamples, 0.0f);
+    std::fill(delayBuffer.begin(), delayBuffer.end(), 0.0f);
+    delayBufferWritePos = 0;
+    this->delayInSamples_ = delayInSamples;
+    this->gain = gain;
 }
 
-void AllPassFilter::process(float* sample) {
-  int delayBufferLength = (int)delayBuffer.size();
-  int delayReadPos =
-      (delayBufferWritePos - delayInSamples_ + delayBufferLength) %
-      delayBufferLength;
+void
+AllPassFilter::process(float* sample)
+{
+    int delayBufferLength = (int)delayBuffer.size();
+    int delayReadPos
+        = (delayBufferWritePos - delayInSamples_ + delayBufferLength) % delayBufferLength;
 
+    float delayedSample = delayBuffer[delayReadPos];
+    float xn = *sample;
 
-  float delayedSample = delayBuffer[delayReadPos];
-  float xn = *sample;
+    float bufferInput = xn + gain * delayedSample;
+    float yn = -gain * xn + delayedSample;
 
-  float bufferInput = xn + gain * delayedSample;
-  float yn = -gain * xn + delayedSample;  
-
-  delayBuffer[delayBufferWritePos] = bufferInput;
-  *sample = yn;
-  delayBufferWritePos = (delayBufferWritePos + 1) % delayBufferLength;
+    delayBuffer[delayBufferWritePos] = bufferInput;
+    *sample = yn;
+    delayBufferWritePos = (delayBufferWritePos + 1) % delayBufferLength;
 }
