@@ -3,7 +3,7 @@
 void
 CombFilter::prepare(double sampleRate, int samplesPerBlock, int delayInSamples, float gain)
 {
-    int maxDelayTimeMs = 500;
+    int maxDelayTimeMs = 50;
     int maxDelaySamples = static_cast<int>(sampleRate * maxDelayTimeMs / 1000.0);
 
     delayBuffer.resize(maxDelaySamples, 0.0f);

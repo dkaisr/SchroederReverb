@@ -3,12 +3,12 @@
 void
 SchroederReverb::prepare(double sampleRate, int samplesPerBlock)
 {
-    combFilter0.prepare(sampleRate, samplesPerBlock, 4799, 0.742f);
-    combFilter1.prepare(sampleRate, samplesPerBlock, 4999, 0.733f);
-    combFilter2.prepare(sampleRate, samplesPerBlock, 5399, 0.715f);
-    combFilter3.prepare(sampleRate, samplesPerBlock, 5801, 0.697f);
-    allPassFilter0.prepare(sampleRate, samplesPerBlock, 1051, 0.7f);
-    allPassFilter1.prepare(sampleRate, samplesPerBlock, 337, 0.7f);
+    combFilter0.prepare(sampleRate, samplesPerBlock, 1557, 0.742f);
+    combFilter1.prepare(sampleRate, samplesPerBlock, 1613, 0.733f);
+    combFilter2.prepare(sampleRate, samplesPerBlock, 1499, 0.715f);
+    combFilter3.prepare(sampleRate, samplesPerBlock, 1427, 0.697f);
+    allPassFilter0.prepare(sampleRate, samplesPerBlock, 347, 0.7f);
+    allPassFilter1.prepare(sampleRate, samplesPerBlock, 1137, 0.7f);
 }
 
 void
