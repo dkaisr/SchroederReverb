@@ -7,7 +7,8 @@ SchroederReverbAudioProcessor::SchroederReverbAudioProcessor()
                          .withInput("Input", juce::AudioChannelSet::stereo(), true)
                          .withOutput("Output", juce::AudioChannelSet::stereo(), true))
 {
-    addParameter(dryWetMix = new juce::AudioParameterFloat({ "mix", 1 }, "Mix", 0.0f, 1.0f, 0.5f));
+    addParameter(dryWetMix = new juce::AudioParameterFloat("mix", "Mix", 0.0f, 1.0f, 0.5f));
+    addParameter(decayFactor = new juce::AudioParameterFloat("decay", "Decay", 0.1f, 10.0f, 1.0f));
 }
 
 SchroederReverbAudioProcessor::~SchroederReverbAudioProcessor() {}
@@ -40,8 +41,7 @@ SchroederReverbAudioProcessor::isMidiEffect() const
 double
 SchroederReverbAudioProcessor::getTailLengthSeconds() const
 {
-    // TODO: Change number after implementing Decay
-    return 0.0;
+    return 10.0;
 }
 
 int
@@ -114,7 +114,7 @@ SchroederReverbAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         for (int i = 0; i < buffer.getNumSamples(); ++i)
         {
             // Apply effect to sample
-            schroederReverb.process(channelData[i], dryWetMix->get());
+            schroederReverb.process(channelData[i], dryWetMix->get(), decayFactor->get());
         }
     }
 }
