@@ -12,7 +12,7 @@ SchroederReverb::prepare(double sampleRate, int samplesPerBlock)
 }
 
 void
-SchroederReverb::process(float* sample)
+SchroederReverb::process(float* sample, float dryWetMix)
 {
     juce::ScopedNoDenormals noDenormals;
 
@@ -30,5 +30,5 @@ SchroederReverb::process(float* sample)
     allPassFilter0.process(&allPassIn);
     allPassFilter1.process(&allPassIn);
 
-    *sample = allPassIn;
+    *sample = dryWetMix * allPassIn + (1.0f - dryWetMix) * *sample;
 }

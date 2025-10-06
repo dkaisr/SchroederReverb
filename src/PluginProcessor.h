@@ -6,6 +6,8 @@
 //==============================================================================
 class SchroederReverbAudioProcessor final : public juce::AudioProcessor
 {
+    friend class SchroederReverbAudioProcessorEditor;
+
   public:
     //==============================================================================
     SchroederReverbAudioProcessor();
@@ -46,5 +48,6 @@ class SchroederReverbAudioProcessor final : public juce::AudioProcessor
   private:
     //==============================================================================
     SchroederReverb schroederReverb;
+    juce::AudioParameterFloat* dryWetMix;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SchroederReverbAudioProcessor)
 };

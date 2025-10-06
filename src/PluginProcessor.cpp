@@ -12,6 +12,7 @@ SchroederReverbAudioProcessor::SchroederReverbAudioProcessor()
 #endif
       )
 {
+  addParameter(dryWetMix = new juce::AudioParameterFloat({"mix", 1}, "Mix", 0.0f, 1.0f, 0.5f));
 }
 
 SchroederReverbAudioProcessor::~SchroederReverbAudioProcessor() {}
@@ -162,7 +163,7 @@ SchroederReverbAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
         auto* channelData = buffer.getWritePointer(channel);
         for (int i = 0; i < buffer.getNumSamples(); ++i)
         {
-            schroederReverb.process(&channelData[i]);
+	  schroederReverb.process(&channelData[i], dryWetMix->get());
         }
         // ..do something to the data...
     }

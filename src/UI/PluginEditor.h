@@ -17,6 +17,8 @@ class SchroederReverbAudioProcessorEditor final : public juce::AudioProcessorEdi
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     SchroederReverbAudioProcessor& processorRef;
+    juce::Slider mixSlider;
+    juce::AudioParameterFloat* mixParam = nullptr;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SchroederReverbAudioProcessorEditor)
 };

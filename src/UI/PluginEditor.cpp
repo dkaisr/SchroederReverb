@@ -6,9 +6,21 @@ SchroederReverbAudioProcessorEditor::SchroederReverbAudioProcessorEditor(
     SchroederReverbAudioProcessor& p)
     : AudioProcessorEditor(&p), processorRef(p)
 {
-    juce::ignoreUnused(processorRef);
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
+    mixParam = processorRef.dryWetMix;
+    mixSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    mixSlider.setTextBoxStyle(juce::Slider::TextBoxRight, false, 50, 20);
+    mixSlider.setRange(0.0, 1.0, 0.01);
+    addAndMakeVisible(mixSlider);
+
+    mixSlider.setValue(mixParam->get());
+    mixSlider.onValueChange = [this]()
+    {
+        if (mixParam != nullptr)
+        {
+            *mixParam = (float)mixSlider.getValue();
+        }
+    };
+
     setSize(400, 300);
 }
 
@@ -18,17 +30,11 @@ SchroederReverbAudioProcessorEditor::~SchroederReverbAudioProcessorEditor() {}
 void
 SchroederReverbAudioProcessorEditor::paint(juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
-
-    g.setColour(juce::Colours::white);
-    g.setFont(15.0f);
-    g.drawFittedText("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void
 SchroederReverbAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+  mixSlider.setBounds(40, 80, getWidth() - 80, 20);
 }
