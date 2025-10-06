@@ -9,7 +9,7 @@ class SchroederReverb
   public:
     void prepare(double sampleRate, int samplesPerBlock);
     void reset();
-    void process(float* sample, float dryWetMix);
+    void process(float& sample, float dryWetMix);
 
   private:
     CombFilter combFilter0, combFilter1, combFilter2, combFilter3;

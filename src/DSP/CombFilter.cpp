@@ -9,19 +9,20 @@ CombFilter::prepare(double sampleRate, int samplesPerBlock, int delayInSamples, 
     delayBuffer.resize(maxDelaySamples, 0.0f);
     std::fill(delayBuffer.begin(), delayBuffer.end(), 0.0f);
     delayBufferWritePos = 0;
-    this->delayInSamples_ = delayInSamples;
+    this->delayInSamples = delayInSamples;
     this->gain = gain;
 }
 
 void
-CombFilter::process(float* sample)
+CombFilter::process(float& sample)
 {
     int delayBufferLength = (int)delayBuffer.size();
     int delayReadPos
-        = (delayBufferWritePos - delayInSamples_ + delayBufferLength) % delayBufferLength;
+        = (delayBufferWritePos - delayInSamples + delayBufferLength) % delayBufferLength;
     float delayedSample = delayBuffer[delayReadPos];
-    float yn = *sample + gain * delayedSample;
-    delayBuffer[delayBufferWritePos] = yn;
+    
+    delayBuffer[delayBufferWritePos] = sample + gain * delayedSample;
+    sample = delayedSample;
+
     delayBufferWritePos = (delayBufferWritePos + 1) % delayBufferLength;
-    *sample = delayedSample;
 }

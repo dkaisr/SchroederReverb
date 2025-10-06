@@ -9,24 +9,20 @@ AllPassFilter::prepare(double sampleRate, int samplesPerBlock, int delayInSample
     delayBuffer.resize(maxDelaySamples, 0.0f);
     std::fill(delayBuffer.begin(), delayBuffer.end(), 0.0f);
     delayBufferWritePos = 0;
-    this->delayInSamples_ = delayInSamples;
+    this->delayInSamples = delayInSamples;
     this->gain = gain;
 }
 
 void
-AllPassFilter::process(float* sample)
+AllPassFilter::process(float& sample)
 {
     int delayBufferLength = (int)delayBuffer.size();
     int delayReadPos
-        = (delayBufferWritePos - delayInSamples_ + delayBufferLength) % delayBufferLength;
-
+        = (delayBufferWritePos - delayInSamples + delayBufferLength) % delayBufferLength;
     float delayedSample = delayBuffer[delayReadPos];
-    float xn = *sample;
+    
+    delayBuffer[delayBufferWritePos] = sample + gain * delayedSample;
+    sample = -gain * sample + delayedSample;
 
-    float bufferInput = xn + gain * delayedSample;
-    float yn = -gain * xn + delayedSample;
-
-    delayBuffer[delayBufferWritePos] = bufferInput;
-    *sample = yn;
     delayBufferWritePos = (delayBufferWritePos + 1) % delayBufferLength;
 }
