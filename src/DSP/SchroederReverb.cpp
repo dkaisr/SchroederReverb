@@ -19,6 +19,7 @@ SchroederReverb::process(float& sample, float dryWetMix, float decayFactor)
 
     float in = sample;
 
+    preDelay.process(in);
 
     float cf0in = in;
     float cf1in = in;
@@ -35,4 +36,10 @@ SchroederReverb::process(float& sample, float dryWetMix, float decayFactor)
     allPassFilter1.process(allPassIn);
 
     sample = dryWetMix * allPassIn + (1.0f - dryWetMix) * sample;
+}
+
+void
+SchroederReverb::setPreDelayMs(float ms)
+{
+    preDelay.setDelayMs(ms);
 }

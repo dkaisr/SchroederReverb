@@ -9,6 +9,8 @@ SchroederReverbAudioProcessor::SchroederReverbAudioProcessor()
 {
     addParameter(dryWetMix = new juce::AudioParameterFloat("mix", "Mix", 0.0f, 1.0f, 0.5f));
     addParameter(decayFactor = new juce::AudioParameterFloat("decay", "Decay", 0.1f, 10.0f, 1.0f));
+    addParameter(preDelay
+                 = new juce::AudioParameterFloat("predelay", "Pre-Delay", 0.0f, 0.2f, 0.0f));
 }
 
 SchroederReverbAudioProcessor::~SchroederReverbAudioProcessor() {}
@@ -103,6 +105,13 @@ SchroederReverbAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 
     int totalNumInputChannels = getTotalNumInputChannels();
     int totalNumOutputChannels = getTotalNumOutputChannels();
+
+    float currentPreDelay = preDelay->get();
+    if (currentPreDelay != lastPreDelay)
+    {
+      schroederReverb.setPreDelayMs(currentPreDelay * 1000.0f);
+        lastPreDelay = currentPreDelay;
+    }
 
     // Clear extra channels
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
