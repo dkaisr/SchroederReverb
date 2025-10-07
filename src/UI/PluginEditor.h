@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../PluginProcessor.h"
+#include "KnobWithLabel.h"
 
 //==============================================================================
 class SchroederReverbAudioProcessorEditor final : public juce::AudioProcessorEditor
@@ -15,8 +16,7 @@ class SchroederReverbAudioProcessorEditor final : public juce::AudioProcessorEdi
 
   private:
     SchroederReverbAudioProcessor& processorRef;
-    juce::Slider mixSlider;
-    juce::AudioParameterFloat* mixParam = nullptr;
+    KnobWithLabel preDelayKnob, decayKnob, mixKnob;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SchroederReverbAudioProcessorEditor)
 };

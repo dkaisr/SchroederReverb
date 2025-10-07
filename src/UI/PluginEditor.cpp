@@ -4,24 +4,14 @@
 //==============================================================================
 SchroederReverbAudioProcessorEditor::SchroederReverbAudioProcessorEditor(
     SchroederReverbAudioProcessor& p)
-    : AudioProcessorEditor(&p), processorRef(p)
+    : AudioProcessorEditor(&p), processorRef(p), preDelayKnob("Pre-Delay", p.preDelay),
+      decayKnob("Decay", p.decayFactor), mixKnob("Dry/Wet", p.dryWetMix)
 {
-    mixParam = processorRef.dryWetMix;
-    mixSlider.setSliderStyle(juce::Slider::LinearHorizontal);
-    mixSlider.setTextBoxStyle(juce::Slider::TextBoxRight, false, 50, 20);
-    mixSlider.setRange(0.0, 1.0, 0.01);
-    addAndMakeVisible(mixSlider);
+    addAndMakeVisible(preDelayKnob);
+    addAndMakeVisible(decayKnob);
+    addAndMakeVisible(mixKnob);
 
-    mixSlider.setValue(mixParam->get());
-    mixSlider.onValueChange = [this]()
-    {
-        if (mixParam != nullptr)
-        {
-            *mixParam = (float)mixSlider.getValue();
-        }
-    };
-
-    setSize(400, 300);
+    setSize(380, 140);
 }
 
 SchroederReverbAudioProcessorEditor::~SchroederReverbAudioProcessorEditor() {}
@@ -36,5 +26,7 @@ SchroederReverbAudioProcessorEditor::paint(juce::Graphics& g)
 void
 SchroederReverbAudioProcessorEditor::resized()
 {
-  mixSlider.setBounds(40, 80, getWidth() - 80, 20);
+    preDelayKnob.setBounds(20, 20, 100, 100);
+    decayKnob.setBounds(140, 20, 100, 100);
+    mixKnob.setBounds(260, 20, 100, 100);
 }
