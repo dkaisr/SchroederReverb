@@ -1,19 +1,15 @@
 # SchroederReverb
 A lightweight cross-platform VST3 reverb plugin written in C++ with the JUCE framework
 
-## Why I built this
-I didn’t have much experience with digital audio before starting this project,
-but as soon as I began exploring the field,
-I wanted to dive deeper -- not just to understand how things work, but to also create something I might actually use.
+## Dependencies
+- [CMake](https://cmake.org)
+- pkg-config
+- [JUCE dependencies](https://github.com/juce-framework/JUCE/blob/cbe7eb9c5211784e903cfd62fef18531e6a88579/docs/Linux%20Dependencies.md) (on linux)
 
-
-This became my first real project in C++ and my first time working with the JUCE framework.
-
-Reverb seemed like a good starting point: simple enough to implement,
-but still complex enough to learn something meaningful along the way.
-
-By building this plugin, I learned the fundamentals of creating my own DSP effects,
-using CMake and designing simple user interfaces.
-
-I'm quite happy with how it's turned out so far.
-
+## How to build this
+```bash
+git clone --recurse-submodules https://github.com/dkaisr/SchroederReverb.git
+cd SchroederReverb
+cmake -S . -B build
+cmake --build build
+```
