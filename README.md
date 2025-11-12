@@ -3,6 +3,7 @@ A lightweight cross-platform VST3 reverb plugin written in C++ with the JUCE fra
 
 ## My motivation
 I'm rather new to digital audio, but as a tinkerer of course my first thought was: "How can I make this myself?"
+
 Reverb seemed simple enough to understand, so I implemented this Schroeder reverberator.
 This is my first real C++ project and I was also able to learn the basics of CMake and the JUCE framework along the way.
 
